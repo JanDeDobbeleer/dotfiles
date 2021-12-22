@@ -1,0 +1,74 @@
+[user]
+	name = Jan De Dobbeleer
+	email = jan.de.dobbeleer@gmail.com
+	signingKey = 414CCA4192B16479F1DFDB7674426DE13ABCC267
+[core]
+	editor = code --wait
+	excludesfile = /Users/jan/.gitignore
+    pager = delta
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	required = true
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    # cmd = code -n --wait --diff $LOCAL $REMOTE
+    cmd = meld $LOCAL $REMOTE
+[push]
+	default = simple
+[mergetool "meld"]
+	path = meld
+[merge]
+	tool = meld
+ 	ff = only
+[rebase]
+    autosquash = true
+[alias]
+    h = log --graph --pretty=format:'%C(white)%h%Creset - %C(blue)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+	dd = difftool --dir-diff
+    u = reset HEAD
+    uc = reset --soft HEAD^
+    l = log -1 HEAD
+    a = commit -a --amend --no-edit
+	d = diff --color-moved -w
+	cp = cherry-pick
+    p = "!git push --set-upstream ${1-origin} HEAD"
+    s = status --branch --show-stash
+	ap = "!git add .;git commit --amend --no-edit;git push ${1-origin} +${2-HEAD}"
+	pf = "!git fetch ${1-origin};git reset --hard ${1-origin}/$(git rev-parse --abbrev-ref HEAD)"
+	pa = pull --all --recurse-submodules; git submodule update
+	fp = "!git push ${1-origin} +HEAD"
+    kill = reset --hard HEAD
+	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+	cleanup = "!f() { git branch --merged ${1:-main} | egrep -v \"(^\\*|${1:-master})\" | xargs --no-run-if-empty git branch -d; };f"
+	ignored = ls-files -o -i --exclude-standard
+	parent-branch = !git show-branch | sed 's/].*//' | grep '\\*' | grep -v  $(git rev-parse --abbrev-ref HEAD) | head -n1 | cut -d'[' -f2
+	co = checkout
+	nb = checkout -b
+	clean-local = !git branch -D $(git branch -av | cut -c 1- | awk '$3 =/\\[gone\\]/ { print $1 }')
+	rf = "!GIT_SEQUENCE_EDITOR=: git rebase -i ${1-origin/master}"
+[help]
+	autocorrect = 1
+[interactive]
+	diffFilter = delta --color-only
+[commit]
+	gpgSign = true
+	# gpgsign = true
+[color]
+	ui = always
+[gpg]
+	program = gpg
+[delta]
+    minus-style = 'syntax bold auto'
+    theme = 'OneHalfDark'
+	line-numbers = true
+	navigate = true
+	side-by-side = true
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[tag]
+	forceSignAnnotated = true
