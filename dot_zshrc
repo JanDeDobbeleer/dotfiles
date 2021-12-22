@@ -4,6 +4,7 @@ export LC_ALL=en_US.UTF-8
 export BAT_THEME="TwoDark"
 export LESS="-SRXF"
 export PATH="$HOME/.serverless/bin:$PATH"
+export EDITOR="code --wait"
 
 # PLUGINS
 fpath=(~/.zsh $fpath)
@@ -41,6 +42,7 @@ alias g="git"
 alias dc="docker-compose"
 alias cat="bat"
 alias ls="exa --icons -a  --group-directories-first"
+alias dot="chezmoi"
 
 # PROMPT
 eval "$(oh-my-posh --init --shell zsh --config ~/.jandedobbeleer.omp.json)"
