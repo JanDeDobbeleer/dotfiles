@@ -1,0 +1,48 @@
+# VARIABLES
+PATH="/usr/local/bin:$PATH"
+export LC_ALL=en_US.UTF-8
+export BAT_THEME="TwoDark"
+export LESS="-SRXF"
+export PATH="$HOME/.serverless/bin:$PATH"
+
+# PLUGINS
+fpath=(~/.zsh $fpath)
+. $(brew --prefix)/etc/profile.d/z.sh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--reverse --bind 'tab:toggle-down,btab:toggle-up'"
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+source /Users/jan/.zsh/fzf-zsh-completion.sh
+bindkey '^I' fzf_completion
+zstyle ':completion:*' fzf-search-display true
+
+eval "$(mcfly init zsh)"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+# CAS INSENSITIVE COMPLETION
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# ALIAS
+alias g="git"
+alias dc="docker-compose"
+alias cat="bat"
+alias ls="exa --icons -a  --group-directories-first"
+
+# PROMPT
+eval "$(oh-my-posh --init --shell zsh --config ~/.jandedobbeleer.omp.json)"
+enable_poshtooltips
+enable_poshtransientprompt
