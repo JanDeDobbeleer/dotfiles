@@ -68,7 +68,7 @@
           "foreground": "#111111",
           "background": "#8ED1F7",
           "background_templates": [
-            "{{ if eq .Full \"1.17.4\" }}#8ED1F7{{ else }}#f1184c{{ end }}"
+            "{{ if eq .Full \"1.17.5\" }}#8ED1F7{{ else }}#f1184c{{ end }}"
           ],
           "properties": {
             "prefix": " \uE626 ",
@@ -171,7 +171,7 @@
           "properties": {
             "always_enabled": true,
             "prefix": "<transparent></> \ufa1e",
-            "postfix": "\u2800",
+            "postfix": " ",
             "style": "round"
           }
         },
@@ -215,6 +215,20 @@
             "prefix": " \uF167 ",
             "paused_icon": " ",
             "playing_icon": " "
+          }
+        },
+        {
+          "type": "wifi",
+          "style": "powerline",
+          "powerline_symbol": "\uE0B0",
+          "invert_powerline": true,
+          "background": "#8822ee",
+          "foreground": "#222222",
+          "background_templates": [
+            "{{ if (lt .Signal 60) }}#DDDD11{{ else if (lt .Signal 90) }}#DD6611{{ else }}#11CC11{{ end }}"
+          ],
+          "properties": {
+            "template": "\uFAA8 {{ .SSID }} {{ .Signal }}% {{ .ReceiveRate }}Mbps"
           }
         },
         {
@@ -280,7 +294,7 @@
       "background": "#9ec3f0",
       "properties": {
         "prefix": " \uFD03 ",
-        "template": "{{.EnvironmentName}}"
+        "template": "{{ .Name }}"
       }
     }
   ],
