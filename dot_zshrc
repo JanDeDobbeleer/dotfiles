@@ -22,10 +22,6 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-source /Users/jan/.zsh/fzf-zsh-completion.sh
-bindkey '^I' fzf_completion
-zstyle ':completion:*' fzf-search-display true
-
 eval "$(mcfly init zsh)"
 
 if type brew &>/dev/null; then
@@ -34,8 +30,9 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-# CAS INSENSITIVE COMPLETION
+# CASE INSENSITIVE COMPLETION
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' fzf-search-display true
 
 # ALIAS
 alias g="git"
