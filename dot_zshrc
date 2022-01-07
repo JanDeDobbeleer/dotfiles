@@ -8,7 +8,6 @@ export EDITOR="code --wait"
 
 # PLUGINS
 fpath=(~/.zsh $fpath)
-. $(brew --prefix)/etc/profile.d/z.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
@@ -23,6 +22,8 @@ _fzf_compgen_dir() {
 }
 
 eval "$(mcfly init zsh)"
+
+eval "$(zoxide init zsh)"
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
